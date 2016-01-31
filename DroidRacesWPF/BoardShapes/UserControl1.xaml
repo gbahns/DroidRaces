@@ -4,12 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DroidRacesWPF"
-             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="DroidRacesWPF.UserControl1"
+             xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="DroidRacesWPF.BoardShapes.UserControl1"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 	<Grid>
 
 		<ed:BlockArrow Name="Arrow" Fill="DarkGray" Orientation="Right" Stroke="Black" />
+		<ed:RegularPolygon Fill="LightGreen" InnerRadius="1" PointCount="3" Stretch="Fill" Stroke="Black" RenderTransformOrigin="0.5,0.5">
+			<ed:RegularPolygon.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform/>
+					<RotateTransform Angle="90"/>
+					<TranslateTransform/>
+				</TransformGroup>
+			</ed:RegularPolygon.RenderTransform>
+		</ed:RegularPolygon>
 
 	</Grid>
 </UserControl>

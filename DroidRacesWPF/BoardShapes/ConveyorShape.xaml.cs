@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,14 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DroidRacesWPF
+namespace DroidRacesWPF.BoardShapes
 {
 	/// <summary>
-	/// Interaction logic for Wrench.xaml
+	/// Interaction logic for ConveyorShape.xaml
 	/// </summary>
-	public partial class WrenchControl : UserControl
+	public partial class ConveyorShape : UserControl
 	{
-		public WrenchControl()
+		public ConveyorShape()
 		{
 			InitializeComponent();
 		}

@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Expression.Drawing, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -57,17 +61,28 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BoardDisplayElement.cs" />
-    <Compile Include="ConveyorShape.xaml.cs">
+    <Compile Include="BoardShapes\ConveyorCornerShape.xaml.cs">
+      <DependentUpon>ConveyorCornerShape.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BoardShapes\ConveyorShape.xaml.cs">
       <DependentUpon>ConveyorShape.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomControl1.cs" />
-    <Compile Include="UserControl1.xaml.cs">
+    <Compile Include="BoardShapes\CustomControl1.cs" />
+    <Compile Include="BoardShapes\DroidShape.cs" />
+    <Compile Include="BoardShapes\FlagShape.cs" />
+    <Compile Include="BoardShapes\HorizontalWallShape.cs" />
+    <Compile Include="BoardShapes\UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WrenchControl.xaml.cs">
+    <Compile Include="BoardShapes\VerticalWallShape.cs" />
+    <Compile Include="BoardShapes\WrenchControl.xaml.cs">
       <DependentUpon>WrenchControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="ConveyorShape.xaml">
+    <Page Include="BoardShapes\ConveyorCornerShape.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BoardShapes\ConveyorShape.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -79,6 +94,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DisplayElementFactory.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -87,11 +103,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControl1.xaml">
+    <Page Include="BoardShapes\UserControl1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WrenchControl.xaml">
+    <Page Include="BoardShapes\WrenchControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -114,6 +130,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

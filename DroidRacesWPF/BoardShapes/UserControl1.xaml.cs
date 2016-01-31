@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DroidRacesWPF
+namespace DroidRacesWPF.BoardShapes
 {
     /// <summary>
     /// Interaction logic for UserControl1.xaml
