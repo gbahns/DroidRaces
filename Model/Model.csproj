@@ -41,6 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="Pit.cs" />
+    <Compile Include="Hammer.cs" />
+    <Compile Include="HorizontalWall.cs" />
+    <Compile Include="VerticalWall.cs" />
+    <Compile Include="Wrench.cs" />
+    <Compile Include="RotatingGear.cs" />
+    <Compile Include="ConveyorCorner.cs" />
+    <Compile Include="Conveyor.cs" />
+    <Compile Include="Direction.cs" />
+    <Compile Include="Droid.cs" />
+    <Compile Include="DroidColor.cs" />
     <Compile Include="Flag.cs" />
     <Compile Include="IBoardObject.cs" />
     <Compile Include="Position.cs" />

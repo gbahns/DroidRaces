@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DroidRacesWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" ResizeMode="CanResizeWithGrip">
-    <Grid>
-        <Canvas Name="GameCanvas" Margin="10" Background="#FFEEEAEA" SizeChanged="GameCanvas_SizeChanged"/>
-	</Grid>
+        Title="MainWindow" Height="500" Width="500" ResizeMode="CanResizeWithGrip">
+	<Border BorderThickness="1" BorderBrush="DarkGray" Margin="10">
+		<Grid Name="GameGrid" ShowGridLines="True" Background="#FFEEEAEA">
+			<local:WrenchControl HorizontalAlignment="Left" Margin="245,23,0,0" VerticalAlignment="Top" Height="117" Width="133"/>
+			<!--<Canvas Name="GameCanvas" Margin="10" Background="#FFEEEAEA" SizeChanged="GameCanvas_SizeChanged"/>-->
+		</Grid>
+	</Border>
 </Window>
