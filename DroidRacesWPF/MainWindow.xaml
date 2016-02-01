@@ -6,10 +6,9 @@
         xmlns:local="clr-namespace:DroidRacesWPF"
         xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="DroidRacesWPF.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="500" ResizeMode="CanResizeWithGrip">
+        Title="Droid Races" Height="800" Width="800" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
 	<Border BorderThickness="1" BorderBrush="DarkGray" Margin="10">
 		<Grid x:Name="GameGrid" ShowGridLines="True" Background="#FFEEEAEA">
-			<ed:RegularPolygon Fill="LightGreen" InnerRadius="1" PointCount="3" Stretch="Fill" Stroke="Black" Margin="0,0,171.6,148.4"/>
 			<!--<Canvas Name="GameCanvas" Margin="10" Background="#FFEEEAEA" SizeChanged="GameCanvas_SizeChanged"/>-->
 		</Grid>
 	</Border>

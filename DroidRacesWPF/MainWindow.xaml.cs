@@ -1,29 +1,17 @@
-﻿using Autofac;
-using DroidRacesWPF.BoardShapes;
-using Microsoft.Expression.Shapes;
+﻿using DroidRacesWPF.BoardShapes;
 using Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DroidRacesWPF
 {
 	public partial class MainWindow : Window
 	{
-		Line[] horizontalGridLines = new Line[11];
-		Line[] verticalGridLines = new Line[11];
 		Brush gridLineBrush = new SolidColorBrush(Colors.DarkGray);
 		Brush conveyorFillBrush = new SolidColorBrush(Colors.Orange);
 		Brush fastConveyorFillBrush = new SolidColorBrush(Colors.Blue);
@@ -37,7 +25,7 @@ namespace DroidRacesWPF
 		Dictionary<string, Func<IBoardObject, UIElement>> displayElementFactoryMap = new Dictionary<string, Func<IBoardObject, UIElement>>()
 		{
 			{"Wrench", e => new WrenchControl((Wrench)e) },
-			{"Conveyor", e => new ConveyorShape() },
+			{"Conveyor", e => new ConveyorShape((Conveyor)e) },
 			{"Flag", e => new FlagShape((Flag)e) },
 			{"Droid", e => new DroidShape((Droid)e) },
 			{"ConveyorCorner", e => new ConveyorCornerShape((ConveyorCorner)e) },
@@ -51,28 +39,6 @@ namespace DroidRacesWPF
 			//var builder = new ContainerBuilder();
 			//builder.RegisterType<WrenchControl>().As<UIElement>();
 			//builder.RegisterType<ConveyorShape>().As<UIElement>();
-			//builder.Register((c, p) =>
-			//	{
-			//		var boardElement = p.TypedAs<IBoardObject>();
-			//		switch (boardElement.GetType().Name)
-			//		{
-			//			case "Wrench": return new WrenchControl((Wrench)boardElement);
-			//			case "Conveyor": return new Conveyor();
-			//		}
-
-			//		//var accountId = p.Named<string>("accountId");
-			//		//if (accountId.StartsWith("9"))
-			//		//{
-			//		//	return new GoldCard(accountId);
-			//		//}
-			//		//else
-			//		//{
-			//		//	return new StandardCard(accountId);
-			//		//}
-			//	}
-			//);
-
-
 			//builder.RegisterAdapter<Conveyor, ConveyorShape>(conveyor => new ConveyorShape());
 			//container = builder.Build();
 
@@ -111,11 +77,10 @@ namespace DroidRacesWPF
 
 			widthByHeight = Width / Height;
 
-			for (int i = 0; i < 10; i++)
-			{
-				GameGrid.RowDefinitions.Add(new RowDefinition());
+			for (int i = 0; i < board.Width; i++)
 				GameGrid.ColumnDefinitions.Add(new ColumnDefinition());
-			}
+			for (int i = 0; i < board.Height; i++)
+				GameGrid.RowDefinitions.Add(new RowDefinition());
 
 			foreach (var boardElement in board.boardElements)
 			{

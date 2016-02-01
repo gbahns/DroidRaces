@@ -9,10 +9,45 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
 	<Viewbox StretchDirection="Both" Stretch="Uniform">
-		<Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="100" Height="100">
-			<Rectangle Fill="#FF39393D" Stroke="Black" Width="80" StrokeThickness="2" Canvas.Left="10" Height="100"/>
-			<ed:BlockArrow Name="Arrow" Fill="Brown" Orientation="Up" Stroke="Black" Height="60.934" Canvas.Left="28.267" Canvas.Top="18.666" Width="42.867" StrokeThickness="2"/>
-		</Canvas>
+		<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="100" Height="100">
+			<Rectangle 
+				Fill="#FF39393D" Stroke="Black" 
+				Width="80" Height="50"
+				StrokeThickness="0" 
+				HorizontalAlignment="Center"
+				VerticalAlignment="Bottom"
+				/>
+			<Rectangle 
+				Fill="#FF39393D" Stroke="Black" 
+				Width="50" Height="80"
+				StrokeThickness="0" 
+				HorizontalAlignment="Right"
+				VerticalAlignment="Center"
+				/>
+			<ed:Arc 
+				ArcThickness="1" 
+				ArcThicknessUnit="Percent" 
+				StartAngle="270"
+				EndAngle="360" 
+				Margin="10"
+				Fill="#FF39393D" 
+				Stretch="None" Stroke="Black" StrokeThickness="0" 
+				/>
+			<ed:BlockArrow Name="Arrow" Fill="#FFE0DD63" Orientation="Up" Stroke="Black" Height="60.934" Canvas.Left="28.267" Canvas.Top="18.666" Width="42.867" StrokeThickness="2" RenderTransformOrigin="0.5,0.5" Margin="38.566,29.533,18.566,9.533">
+				<ed:BlockArrow.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform/>
+						<SkewTransform/>
+						<RotateTransform Angle="46.378"/>
+						<TranslateTransform/>
+					</TransformGroup>
+				</ed:BlockArrow.RenderTransform>
+			</ed:BlockArrow>
+			<!--<ed:LineArrow 
+				Stroke="#FFDC9F30" 
+				StrokeThickness="10" 
+				BendAmount="1" StartCorner="BottomLeft" HorizontalAlignment="Center" Width="60" Height="60" VerticalAlignment="Center" Margin="30,30,10,10"/>-->
+		</Grid>
 	</Viewbox>
 
 </UserControl>
