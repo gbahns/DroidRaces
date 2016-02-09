@@ -12,14 +12,14 @@
 		<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="100" Height="100">
 			<Rectangle 
 				Fill="#FF39393D" Stroke="Black" 
-				Width="80" Height="50"
+				Width="80" Height="51"
 				StrokeThickness="0" 
 				HorizontalAlignment="Center"
 				VerticalAlignment="Bottom"
 				/>
 			<Rectangle 
 				Fill="#FF39393D" Stroke="Black" 
-				Width="50" Height="80"
+				Width="51" Height="80"
 				StrokeThickness="0" 
 				HorizontalAlignment="Right"
 				VerticalAlignment="Center"

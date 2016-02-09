@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Model
 {
@@ -7,9 +8,12 @@ namespace Model
 		public int Width = 15;
 		public int Height = 15;
 		public List<IBoardObject> boardElements = new List<IBoardObject>();
+		public List<Droid> Droids { get; private set; }
 
 		public Board()
 		{
+			Droids = new List<Droid>();
+
 			AddFlag(1, 2, 2);
 			AddFlag(2, 13, 3);
 			AddFlag(3, 4, 8);
@@ -19,57 +23,79 @@ namespace Model
 			AddDroid(8, 14, Direction.Up, DroidColor.Pink);
 			AddDroid(10, 14, Direction.Right, DroidColor.Purple);
 
-			AddConveyorOval(2, 2, 12, 12, true, 1);
-			AddConveyorOval(4, 4, 10, 10, false, 2);
+			var droid = Droids[0];
+			droid.Instructions.Add(Instruction.Move1);
+			droid.Instructions.Add(Instruction.TurnRight);
+			droid.Instructions.Add(Instruction.Move1);
+			droid.Instructions.Add(Instruction.Move1);
+			droid.Instructions.Add(Instruction.Move1);
+			droid.Instructions.Add(Instruction.UTurn);
+			droid.Instructions.Add(Instruction.Move1);
+			droid.Instructions.Add(Instruction.Move1);
+			droid.Instructions.Add(Instruction.TurnLeft);
+			droid.Instructions.Add(Instruction.Move3);
+			droid.Instructions.Add(Instruction.Backup);
+
+			//AddConveyorOval(2, 2, 12, 12, true, 1);
+			//AddConveyorOval(4, 4, 10, 10, false, 2);
+			AddClockwiseConveyorOval(2, 2, 12, 12, 1);
+			AddCounterclockwiseConveyorOval(4, 4, 10, 10, 2);
 
 			AddVerticalWall(0, 1);
 			AddVerticalWall(1, 0);
 			AddHorizontalWall(1, 1);
 
 			AddWrench(0, 3);
+			AddHammer(0, 4);
+			AddWrench(0, 5);
+			AddHammer(0, 5);
+
+			AddPit(5, 5);
 		}
 
-		void AddConveyorOval(int x1, int y1, int x2, int y2, bool clockwise, int speed)
+		void AddClockwiseConveyorOval(int x1, int y1, int x2, int y2, int speed)
 		{
-			var dir = new Direction[4];
-			if (clockwise)
-			{
-				dir[0] = Direction.Right;
-				dir[1] = Direction.Down;
-				dir[2] = Direction.Left;
-				dir[3] = Direction.Up;
-			}
-			else
-			{
-				dir[0] = Direction.Left;
-				dir[1] = Direction.Down;
-				dir[2] = Direction.Right;
-				dir[3] = Direction.Up;
-			}
+			for (int x = x1; x < x2; x++)
+				AddConveyor(x, y1, Direction.Right, speed);
+			for (int x = x1 + 1; x <= x2; x++)
+				AddConveyor(x, y2, Direction.Left, speed);
+			for (int y = y1 + 1; y <= y2; y++)
+				AddConveyor(x1, y, Direction.Up, speed);
+			for (int y = y1; y < y2; y++)
+				AddConveyor(x2, y, Direction.Down, speed);
+		}
 
-			for (int x = x1 + 1; x < x2; x++)
-			{
-				AddConveyor(x, y1, dir[0], speed);
-				AddConveyor(x, y2, dir[2], speed);
-			}
+		void AddCounterclockwiseConveyorOval(int x1, int y1, int x2, int y2, int speed)
+		{
+			for (int x = x1 + 1; x <= x2; x++)
+				AddConveyor(x, y1, Direction.Left, speed);
+			for (int x = x1; x < x2; x++)
+				AddConveyor(x, y2, Direction.Right, speed);
+			for (int y = y1; y < y2; y++)
+				AddConveyor(x1, y, Direction.Down, speed);
+			for (int y = y1 + 1; y <= y2; y++)
+				AddConveyor(x2, y, Direction.Up, speed);
+		}
 
-			for (int y = y1 + 1; y < y2; y++)
-			{
-				AddConveyor(x1, y, dir[clockwise ? 3 : 1], speed);
-				AddConveyor(x2, y, dir[clockwise ? 1 : 3], speed);
-			}
-
-			AddConveyorCorner(x1, y1, dir[3], dir[0], speed);
-			AddConveyorCorner(x2, y1, dir[0], dir[1], speed);
-			AddConveyorCorner(x2, y2, dir[1], dir[2], speed);
-			AddConveyorCorner(x1, y2, dir[2], dir[3], speed);
+		void AddPit(int x, int y)
+		{
+			var item = new Pit();
+			item.position = new Position(x, y); ;
+			boardElements.Add(item);
 		}
 
 		void AddFlag(int i, int x, int y)
 		{
-			var flag = new Flag(i);
-			flag.position = new Position(x, y); ;
-			boardElements.Add(flag);
+			var item = new Flag(i);
+			item.position = new Position(x, y); ;
+			boardElements.Add(item);
+		}
+
+		void AddHammer(int x, int y)
+		{
+			var item = new Hammer();
+			item.position = new Position(x, y);
+			boardElements.Add(item);
 		}
 
 		void AddWrench(int x, int y)
@@ -119,6 +145,7 @@ namespace Model
 			droid.direction = direction;
 			droid.color = color;
 			boardElements.Add(droid);
+			Droids.Add(droid);
 		}
 	}
 }

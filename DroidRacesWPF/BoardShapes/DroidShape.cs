@@ -1,10 +1,5 @@
 ﻿using Microsoft.Expression.Shapes;
 using Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -13,20 +8,77 @@ namespace DroidRacesWPF.BoardShapes
 {
 	public class DroidShape : UserControl
 	{
-		public DroidShape(Droid droid)
+		//Droid droid;
+		//public Droid Droid2
+		//{
+		//	get { return droid; }
+		//	set
+		//	{
+		//		droid = value;
+		//		var shape = (RegularPolygon)Content;
+		//		shape.Fill = new SolidColorBrush(GetDroidColor(Droid.color));
+		//		shape.RenderTransform = new RotateTransform(DirectionToAngle(Droid.direction));
+		//	}
+		//}
+
+		public static readonly DependencyProperty DroidProperty =
+			DependencyProperty.Register("Droid", typeof(Droid), typeof(DroidShape));
+
+		public Droid Droid
+		{
+			get
+			{
+				return (Droid)GetValue(DroidProperty);
+			}
+			set
+			{
+				SetValue(DroidProperty, value);
+				var shape = (RegularPolygon)Content;
+				shape.Fill = new SolidColorBrush(GetDroidColor(Droid.color));
+				shape.RenderTransform = new RotateTransform(DirectionToAngle(Droid.direction));
+				Droid.PropertyChanged += (s, e) =>
+				{
+					if (e.PropertyName == "direction")
+					{
+						shape.RenderTransform = new RotateTransform(DirectionToAngle(Droid.direction));
+					}
+				};
+			}
+		}
+
+		//public static readonly DependencyProperty DirectionProperty =
+		//	DependencyProperty.Register("Direction", typeof(Direction), typeof(Direction));
+
+		//public Direction Direction
+		//{
+		//	get { return (Direction)GetValue(DirectionProperty); }
+		//	set { SetValue(DirectionProperty, Direction); }
+		//}
+
+		//public static readonly DependencyProperty AngleProperty =
+		//	DependencyProperty.Register("Angle", typeof(double), typeof(double));
+
+		//public double Angle
+		//{
+		//	get { return (double)GetValue(AngleProperty); }
+		//	set { SetValue(AngleProperty, value); }
+		//}
+
+		public DroidShape()
 		{
 			var shape = new RegularPolygon();
-			shape.Fill = new SolidColorBrush(GetDroidColor(droid.color));
 			shape.InnerRadius = 1;
 			shape.PointCount = 3;
-
 			shape.Stretch = Stretch.Fill;
 			shape.Stroke = new SolidColorBrush(Colors.Black);
 			shape.Margin = new Thickness(3);
 			shape.RenderTransformOrigin = new Point(0.5, 0.5);
-			shape.RenderTransform = new RotateTransform(DirectionToAngle(droid.direction));
-			
 			Content = shape;
+		}
+
+		public DroidShape(Droid droid) : this()
+		{
+			Droid = droid;
 		}
 
 		Color GetDroidColor(DroidColor color)
@@ -56,6 +108,5 @@ namespace DroidRacesWPF.BoardShapes
 				default: return 0;
 			}
 		}
-
 	}
 }

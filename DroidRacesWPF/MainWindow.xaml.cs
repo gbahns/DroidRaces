@@ -2,39 +2,57 @@
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using GalaSoft.MvvmLight.CommandWpf;
+using DroidRacesWPF.ViewModel;
+using System.Windows.Data;
 
 namespace DroidRacesWPF
 {
 	public partial class MainWindow : Window
 	{
+		Dictionary<string, Func<IBoardObject, UIElement>> displayElementFactoryMap = new Dictionary<string, Func<IBoardObject, UIElement>>()
+		{
+			{"Pit", e => new PitShape() },
+			{"Wrench", e => new WrenchControl((Wrench)e) },
+			{"Hammer", e => new HammerControl() },
+			{"Conveyor", e => new ConveyorShape((Conveyor)e) },
+			{"Flag", e => new FlagShape((Flag)e) },
+			{"ConveyorCorner", e => new ConveyorCornerShape((ConveyorCorner)e) },
+			{"VerticalWall", e => new VerticalWallShape() },
+			{"HorizontalWall", e => new HorizontalWallShape() },
+			{"Droid", e => {
+				//var shape = new DroidShape((Droid)e);
+				var shape = new DroidShape();
+				shape.Droid = (Droid)e;
+				//shape.SetBinding();
+				BindingOperations.SetBinding(shape, Grid.RowProperty, new Binding { Path = new PropertyPath(Grid.RowProperty), Source = shape });
+				BindingOperations.SetBinding(shape, Grid.ColumnProperty, new Binding { Path = new PropertyPath(Grid.ColumnProperty), Source = shape });
+				return shape;
+			} },
+		};
+
 		Brush gridLineBrush = new SolidColorBrush(Colors.DarkGray);
 		Brush conveyorFillBrush = new SolidColorBrush(Colors.Orange);
 		Brush fastConveyorFillBrush = new SolidColorBrush(Colors.Blue);
-		Board board = new Board();
 		List<BoardDisplayElement> boardDispalyElements = new List<BoardDisplayElement>();
 
 		double widthByHeight = 0;
 
-		//IContainer container;
+		MainViewModel viewModel { get; set; }
 
-		Dictionary<string, Func<IBoardObject, UIElement>> displayElementFactoryMap = new Dictionary<string, Func<IBoardObject, UIElement>>()
-		{
-			{"Wrench", e => new WrenchControl((Wrench)e) },
-			{"Conveyor", e => new ConveyorShape((Conveyor)e) },
-			{"Flag", e => new FlagShape((Flag)e) },
-			{"Droid", e => new DroidShape((Droid)e) },
-			{"ConveyorCorner", e => new ConveyorCornerShape((ConveyorCorner)e) },
-			{"VerticalWall", e => new VerticalWallShape() },
-			{"HorizontalWall", e => new HorizontalWallShape() },
-		};
+		//IContainer container;
 
 		public MainWindow()
 		{
+			viewModel = new MainViewModel();
+			DataContext = viewModel;
+
 			//var container = new UnityContainer();
 			//var builder = new ContainerBuilder();
 			//builder.RegisterType<WrenchControl>().As<UIElement>();
@@ -43,6 +61,8 @@ namespace DroidRacesWPF
 			//container = builder.Build();
 
 			InitializeComponent();
+
+			DroidShape1.Droid = viewModel.Droid1;
 		}
 
 		protected override void OnSourceInitialized(EventArgs e)
@@ -77,12 +97,12 @@ namespace DroidRacesWPF
 
 			widthByHeight = Width / Height;
 
-			for (int i = 0; i < board.Width; i++)
+			for (int i = 0; i < viewModel.Board.Width; i++)
 				GameGrid.ColumnDefinitions.Add(new ColumnDefinition());
-			for (int i = 0; i < board.Height; i++)
+			for (int i = 0; i < viewModel.Board.Height; i++)
 				GameGrid.RowDefinitions.Add(new RowDefinition());
 
-			foreach (var boardElement in board.boardElements)
+			foreach (var boardElement in viewModel.Board.boardElements)
 			{
 				AddDisplayElement(boardElement);
 			}
